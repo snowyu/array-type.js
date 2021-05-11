@@ -1,7 +1,7 @@
 import 'jest-extended'
 import 'boolean-type'
 
-import { ArrayType, Type } from './'
+import { ArrayType } from './'
 
 describe('ArrayType', () => {
   const arr = new ArrayType()
@@ -16,8 +16,8 @@ describe('ArrayType', () => {
       const expected = [6, 3, 3]
       const result = ArrayType.from(expected)
       expect(result.value).toEqual(expected)
-    });
-  });
+    })
+  })
 
   describe('range', () => {
     it('should not set the wrong range of Array', () => {
