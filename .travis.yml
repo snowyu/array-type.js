@@ -1,27 +1,20 @@
 language: node_js
 node_js:
-  - "0.10"
-  - "0.11"
-  - "0.12"
-  - "1.0"
-  - "1.8"
-  - "2.0"
-  - "2.2"
-  - "2.3"
-  - "4.0"
-  - "5.0"
+- '10'
+- '11'
+- '12'
+- '13'
+- '14'
 before_install:
-  - npm install -g grunt-cli
-  - npm install coffee-script
-before_script: grunt build
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+before_script:
+- "./cc-test-reporter before-build"
 script: npm run-script test-cov
 after_success:
-  - test -e ./coverage/lcov.info && npm install codeclimate-test-reporter && codeclimate-test-reporter
-    < ./coverage/lcov.info
+- test -e ./.coverage/lcov.info && ./cc-test-reporter format-coverage -t lcov ./.coverage/lcov.info
+  && ./cc-test-reporter upload-coverage
 notifications:
   email:
-    - snowyu.lee@gmail.com
-addons:
-  code_climate:
-    repo_token:
-      secure: "nq9JaZF9PbyXMMJaxmYqaCqqT0eUNs0FUJOnbUUw19ZrNJvOle5YWQ2JIt8A4GymwrPsG8MIDQhk0MFJZxTYLHoYPaSdSuGqSRgxYECCVPa+vvRu6Yr7AlHGa4gxzQ1GWJoxxMrWtZgqFgW3yBQ9yi1aiNciM3HafwdNPjCJBGbP/+4rkF3gd9SXVFhKmmzydWeC2c9SzU55jT2oGjSsYoo/vex4UnTuX++JvuxDWfCBItX3G9FGzRdq0XB9fLwnugnCaAJQyxzDJsH726EJut5dKg10dY2xSZyo9PNW6FI3xPiInB/gOEt0Hmso6TVp9gXdd4U1BrteeXn+VhDVC59Jgwx3PyjsAB/mMFnsVeGoaQGvAYD+SZ6avrOWpiZss2kZVsTtgjH7EkTzTmCZa5loqIbB8tmdvYrlfI1ygxtFiEdqo+KxcqevXLnxYCYScGn7wUnrvsLinylcOeZjRlf8pKYcp8OHs2ciz89tjD4SrSb0QL29k0oAEByGHIfd0DdCk+S4zUdi5Iqw76Iuz2DQEM6Xs9i6GOP7KFtL9ZjXNKmrtPshRTExvDI1WXdn3tlOlXkUYxprXmMZn9yCfeeEIafP6yO5kK2CxKK8hU3urbo+bScoeuJBSN+ojgOzf/DzfnG3x6VNlx0DUWmoaKcx9WqoA+AEmCaLQGsrhqQ="
+  - snowyu.lee@gmail.com
