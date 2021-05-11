@@ -24,19 +24,22 @@ The array type. See the [type-info](https://github.com/snowyu/type-info.js) for 
 
 ```js
 //register the array type to the TypeInfo..
-require('array-type')
-var TypeInfo = require('abstract-type')
+import 'array-type'
+import {Type} from 'abstract-type'
 //get the array type info:
-var ArrayType = TypeInfo('array')
+const ArrayType = Type.get('array')
 /*
 //Just load array type only:
-var ArrayTypeInfo = require('array-type')
-var ArrayType = ArrayTypeInfo()
- */
-var LimitedArrayType = TypeInfo('array', min:1, max:3)
+import {ArrayType} from 'array-type'
+*/
 
-var arr = ArrayType.create([1,2,3])
-//var arr = ArrayType.createValue([1,2,3]) //it's the same.
+var LimitedArrayType = new ArrayType({min:1, max:3})
+
+var arr = new ArrayType([1,2,3])
+
+for (const item of arr) {
+  console.log(item)
+}
 
 console.log(arr)
 //<type "array": "value":[1,2,3]>
@@ -59,15 +62,12 @@ n.assign('aaa')
 
 * The ArrayType Class
   * options:
-    * min: the minimum length of the array. null or undefined means unlimited.
-    * max: the maximum length of the array.
+    * `min`: the minimum length of the array. null or undefined means unlimited.
+    * `max`: the maximum length of the array.
+    * `of`:  option to limit the element's type. the array's element type
+      * eg, `ArrayType of: 'String'`
 
 See [abstract-type](https://github.com/snowyu/abstract-type.js)
-
-## TODO
-
-+ `of` option to limit the element's type.
-  * eg, `ArrayType of: 'String'`
 
 ## License
 
